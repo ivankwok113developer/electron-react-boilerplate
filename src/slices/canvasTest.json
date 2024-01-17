@@ -1,0 +1,17 @@
+{
+  "block1": {
+    "id": "block1",
+    "type": "block",
+    "coordinates": { "x": 100, "y": 200 },
+    "properties": {
+      "inputs": [
+        { "name": "input1", "value": "value1", "id": "in1" },
+        { "name": "input2", "value": "value2", "id": "in2" }
+      ],
+      "outputs": [{ "name": "output1", "value": "value1", "id": "out1" }],
+      "parameters": [{ "name": "param1", "value": "value1", "id": "param1" }],
+      "script": "print('Hello, world!')",
+      "view": {}
+    }
+  }
+}
