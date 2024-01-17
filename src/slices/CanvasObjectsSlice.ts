@@ -1,20 +1,13 @@
+// /Users/ivankwok/develope/ScriptAssembler/src/slices/CanvasObjectsSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import testData from './canvasTest.json'; // Assuming JSON import is configured
+import { CanvasObject, CanvasObjectsState } from '../models/canvas/objectModel'; // Adjust the path as needed
 
-interface CanvasObject {
-  id: string;
-  type: string;
-  coordinates: { x: number; y: number };
-  properties: any;
-  // Add more properties as needed
-}
 
-interface CanvasObjectsState {
-  objects: { [id: string]: CanvasObject };
-}
 
 const initialState: CanvasObjectsState = {
   objects: testData,
+  selectedObjects: [],
 };
 
 const canvasObjectsSlice = createSlice({
@@ -24,7 +17,7 @@ const canvasObjectsSlice = createSlice({
     addObject: (state, action: PayloadAction<CanvasObject>) => {
       state.objects[action.payload.id] = action.payload;
     },
-    updateObjectCoordinates: (
+    setObjectCoordinates: (
       state,
       action: PayloadAction<{
         id: string;
@@ -36,9 +29,46 @@ const canvasObjectsSlice = createSlice({
         state.objects[id].coordinates = coordinates;
       }
     },
-    // Add more reducers as needed (updateObject, removeObject, etc.)
+    moveObjectCoordinates: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        coordinates: { dx: number; dy: number };
+      }>,
+    ) => {
+      const { id, coordinates } = action.payload;
+      if (state.objects[id]) {
+        state.objects[id].coordinates.x += coordinates.dx;
+        state.objects[id].coordinates.y += coordinates.dy;
+      }
+    },
+
+    selectObject: (state, action: PayloadAction<string>) => {
+      //add object to selectedObjects
+      state.selectedObjects.push(action.payload); 
+      
+      //set onject's isSelected to true
+      state.objects[action.payload].isSelected = true;
+    },
+
+    // Reducer to clear selection
+    clearSelection: (state) => {
+      //clear selectedObjects
+      state.selectedObjects = [];
+
+      //set each object's isSelected to false
+      Object.values(state.objects).forEach((object) => {
+        object.isSelected = false;
+      });
+    },
   },
 });
 
-export const { addObject, updateObjectCoordinates } = canvasObjectsSlice.actions;
+export const {
+  addObject,
+  setObjectCoordinates,
+  selectObject,
+  clearSelection,
+  moveObjectCoordinates,
+} = canvasObjectsSlice.actions;
 export default canvasObjectsSlice.reducer;

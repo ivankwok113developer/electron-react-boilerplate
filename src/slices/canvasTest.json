@@ -3,7 +3,9 @@
     "id": "block1",
     "type": "block",
     "coordinates": { "x": 100, "y": 200 },
+    "isSelected": false,
     "properties": {
+      "name": "block1",
       "inputs": [
         { "name": "input1", "value": "value1", "id": "in1" },
         { "name": "input2", "value": "value2", "id": "in2" }

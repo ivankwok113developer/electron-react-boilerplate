@@ -9,8 +9,9 @@ import { TitleBar } from '../components/general/TitleBar';
 
 export default function App() {
   return (
+    //redux store
     <Provider store={store}>
-      <div className="flex flex-col w-screen h-screen bg-bg border">
+      <div className="flex flex-col w-screen h-screen bg-bg">
         <TitleBar />
         <CanvasPage />
       </div>
